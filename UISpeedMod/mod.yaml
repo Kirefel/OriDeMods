@@ -1,0 +1,6 @@
+mod:
+  name: UI Speed
+  author: Kirefel
+  type: Mod
+  description: Removes text boxes for faster gameplay
+  version: 1.0

@@ -1,0 +1,6 @@
+mod:
+  name: UILib
+  author: Kirefel
+  type: Library
+  description: Library to add custom menus in-game.
+  version: 1.0
