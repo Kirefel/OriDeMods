@@ -11,18 +11,21 @@ namespace AccessibilityMod
     {
         public static void Postfix(CleverMenuItemSelectionManager __instance)
         {
-            CleverMenuItem continueButton = __instance.MenuItems[0];
-            CleverMenuItem exitButton = __instance.MenuItems[9];
-            __instance.Navigation.Add(new CleverMenuItemSelectionManager.NavigationData
+            if (__instance.name == "inventoryScreen")
             {
-                From = continueButton,
-                To = exitButton
-            });
-            __instance.Navigation.Add(new CleverMenuItemSelectionManager.NavigationData
-            {
-                From = exitButton,
-                To = continueButton
-            });
+                CleverMenuItem continueButton = __instance.MenuItems[0];
+                CleverMenuItem exitButton = __instance.MenuItems[9];
+                __instance.Navigation.Add(new CleverMenuItemSelectionManager.NavigationData
+                {
+                    From = continueButton,
+                    To = exitButton
+                });
+                __instance.Navigation.Add(new CleverMenuItemSelectionManager.NavigationData
+                {
+                    From = exitButton,
+                    To = continueButton
+                });
+            }
         }
     }
 

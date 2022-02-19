@@ -1,8 +1,0 @@
-mod:
-  name: Accessibility Mod
-  author: Kirefel
-  type: Mod
-  description: Adds accessibility features
-  version: 1.0
-  dependencies:
-  - UILib
