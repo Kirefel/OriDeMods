@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Trainer
@@ -26,28 +27,25 @@ namespace Trainer
 
         public static bool ShouldSkipInput { get; private set; } = false;
 
-        IEnumerator LateFixedUpdate()
+        private void StartLoop()
+        {
+            if (coroutine == null)
+                coroutine = StartCoroutine(Coroutine());
+        }
+
+        IEnumerator Coroutine()
         {
             while (TrainerActive)
             {
                 yield return new WaitForFixedUpdate();
 
-                if (suspended && resumePending)
-                    Resume();
-                else if (!suspended && suspensionPending)
-                    SuspendAll();
+                LateFixedUpdate();
             }
 
             coroutine = null;
         }
 
-        private void StartLoop()
-        {
-            if (coroutine == null)
-                coroutine = StartCoroutine(LateFixedUpdate());
-        }
-
-        public void SuspendAll()
+        private void Suspend()
         {
             SuspensionManager.SuspendAll();
             suspensionPending = false;
@@ -68,6 +66,9 @@ namespace Trainer
             TrainerActive = true;
         }
 
+
+        private string lastInput;
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Home))
@@ -84,6 +85,57 @@ namespace Trainer
                 resumePending = true;
                 suspensionPending = true;
             }
+        }
+
+        private void LateFixedUpdate()
+        {
+            if (suspended && resumePending)
+            {
+                Resume();
+            }
+            else if (!suspended && suspensionPending)
+            {
+                CollectInputsFromFrame();
+                Suspend();
+            }
+        }
+
+        void OnGUI()
+        {
+            if (lastInput != null)
+            {
+                GUI.Box(new Rect(10, 10, 400, 20), "");
+                GUI.Label(new Rect(10, 10, 400, 20), lastInput);
+            }
+        }
+
+        List<string> inputs = new List<string>();
+        private void CollectInputsFromFrame()
+        {
+            inputs.Clear();
+
+            GetButton(Core.Input.Up, "Up");
+            GetButton(Core.Input.Down, "Down");
+            GetButton(Core.Input.Left, "Left");
+            GetButton(Core.Input.Right, "Right");
+
+            GetButton(Core.Input.Jump, "Jump");
+            GetButton(Core.Input.SoulFlame, "SoulFlame");
+            GetButton(Core.Input.SpiritFlame, "SpiritFlame");
+            GetButton(Core.Input.Bash, "Bash");
+
+            GetButton(Core.Input.Glide, "Glide");
+            GetButton(Core.Input.ChargeJump, "ChargeJump");
+            GetButton(Core.Input.LeftShoulder, "Grenade");
+            GetButton(Core.Input.RightShoulder, "Dash");
+
+            lastInput = string.Join(" ", inputs.ToArray());
+        }
+
+        private void GetButton(Core.Input.InputButtonProcessor button, string name)
+        {
+            if (button.OnPressed) inputs.Add(name + "*");
+            else if (button.IsPressed) inputs.Add(name);
         }
     }
 }
