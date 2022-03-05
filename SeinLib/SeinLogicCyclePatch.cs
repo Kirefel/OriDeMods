@@ -13,7 +13,7 @@ namespace SeinLib
             List<CodeInstruction> codes = instructions.ToList();
             bool needsUpdateActive = true;
 
-            var updateCharacterStateMethod = AccessTools.Method(typeof(CharacterState), nameof(CharacterState.UpdateCharacterState));
+            var updateCharacterStateMethod = AccessTools.Method(typeof(CharacterState), nameof(CharacterState.UpdateCharacterState),parameters: new [] { typeof(CharacterState) });
 
             for (int i = 0; i < codes.Count; i++)
             {

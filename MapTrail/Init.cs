@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using BaseModLib;
+using HarmonyLib;
 using OriDeModLoader;
 
 namespace MapTrail
@@ -13,6 +14,13 @@ namespace MapTrail
         {
             harmony = new Harmony("com.ori.maptrail");
             harmony.PatchAll();
+
+            Hooks.OnStartNewGame += () =>
+            {
+                MapTrailController.Instance.Reset();
+            };
+
+            Controllers.Add<MapTrailController>("653e23f4-f975-48a0-8bfd-13ede6641438");
         }
 
         public void Unload()
