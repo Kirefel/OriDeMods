@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using HarmonyLib;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Trainer
 {
-    public class TrainerController : MonoBehaviour
+    public class TrainerFrameStep : MonoBehaviour
     {
         private Coroutine coroutine;
 
@@ -71,7 +72,7 @@ namespace Trainer
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Home))
+            if (Input.GetKeyDown(Controls.StepPause))
             {
                 if (suspended)
                     resumePending = true;
@@ -80,7 +81,7 @@ namespace Trainer
             }
 
             // Step single frame
-            if (suspended && Input.GetKeyDown(KeyCode.PageDown))
+            if (suspended && Input.GetKeyDown(Controls.Step))
             {
                 resumePending = true;
                 suspensionPending = true;

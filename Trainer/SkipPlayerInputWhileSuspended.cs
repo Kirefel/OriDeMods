@@ -8,7 +8,7 @@ namespace Trainer
         static bool Prefix()
         {
             // Returning false causes the original method to be skipped
-            return !TrainerController.ShouldSkipInput;
+            return !TrainerFrameStep.ShouldSkipInput;
         }
     }
 }

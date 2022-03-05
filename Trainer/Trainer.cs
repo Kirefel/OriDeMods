@@ -12,7 +12,8 @@ namespace Trainer
 
         public void Init()
         {
-            Controllers.Add<TrainerController>();
+            Controllers.Add<TrainerFrameStep>();
+            Controllers.Add<TrainerRace>();
 
             harmony = new Harmony("com.ori.trainer");
             harmony.PatchAll();
