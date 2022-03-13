@@ -41,6 +41,7 @@ namespace Randomiser
     public class Randomiser
     {
         public static RandomiserInventory Inventory { get; internal set; }
+        public static RandomiserSeed Seed { get; internal set; }
 
         static BasicMessageProvider messageProvider;
 
@@ -48,6 +49,7 @@ namespace Randomiser
         {
             Message(guid.ToString());
             GameWorld.Instance.CurrentArea.DirtyCompletionAmount();
+            CheckGoal();
         }
 
         public static bool Has(MoonGuid guid) => false;
@@ -60,14 +62,37 @@ namespace Randomiser
             messageProvider.SetMessage(message);
             UI.Hints.Show(messageProvider, HintLayer.Gameplay);
         }
+
+        private static void CheckGoal()
+        {
+            // if (!Inventory.goalComplete)
+            // {
+            //     bool goalMet = idk;
+            //     if (goalMet)
+            //     {
+            //         Inventory.goalComplete = true;
+            //         if (Seed.HasFlag(RandomiserFlags.SkipEscape))
+            //         {
+            //             Win();
+            //         }
+            //         else
+            //         {
+            //             Inventory.goalComplete = true;
+            //             Message("Horu escape now available");
+            //         }
+            //     }
+            // }
+        }
     }
 
     public class RandomiserInventory : SaveSerialize
     {
+        public bool goalComplete;
         public bool finishedEscape;
 
         public override void Serialize(Archive ar)
         {
+            ar.Serialize(ref goalComplete);
             ar.Serialize(ref finishedEscape);
         }
     }

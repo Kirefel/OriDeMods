@@ -16,10 +16,13 @@ namespace Randomiser
                 ["ginsoTreeWaterRisingMid"] = BootstrapGinsoEscapeMid,
                 ["ginsoTreeWaterRisingBtm"] = BootstrapGinsoEscapeStart,
                 ["ginsoTreeResurrection"] = BootstrapGinsoTreeResurrection,
-                ["thornfeltSwampActTwoStart"] = BootstrapThornfeltSwampActTwoStart
+                ["thornfeltSwampActTwoStart"] = BootstrapThornfeltSwampActTwoStart,
+
+                ["mountHoruHubBottom"] = BootstrapMountHoruHubBottom
             };
         }
 
+        #region Ginso Fixes
         private static void BootstrapThornfeltSwampActTwoStart(SceneRoot sceneRoot)
         {
             // Make swamp cutscene play based on "finished ginso escape" instead of "clean water"
@@ -105,6 +108,14 @@ namespace Randomiser
                 activator.Condition = newCondition;
 
             UnityEngine.Object.Destroy(musicZones.GetComponent<SeinWorldStateCondition>());
+        }
+        #endregion
+
+        private static void BootstrapMountHoruHubBottom(SceneRoot sceneRoot)
+        {
+            var door = sceneRoot.transform.Find("mountHoruExitDoor").GetComponent<Door>();
+            var activator = door.gameObject.AddComponent<ActivateDoorBasedOnRandomiserGoal>();
+            activator.door = door;
         }
     }
 }
