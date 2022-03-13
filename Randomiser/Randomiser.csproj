@@ -51,6 +51,7 @@
     <Compile Include="RandomiserIcons.cs" />
     <Compile Include="RandomiserMod.cs" />
     <Compile Include="Pickups\RandomiserPickupProcessor.cs" />
+    <Compile Include="RandomiserSeed.cs" />
     <Compile Include="SceneBootstrap.cs" />
     <Compile Include="Pickups\SkillTreePatch.cs" />
     <Compile Include="Pickups\WorldEventsPatch.cs" />
@@ -65,6 +66,9 @@
       <Project>{4fb90e4d-a170-4261-b1d0-d9a8cee880ae}</Project>
       <Name>UILib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\LocationData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

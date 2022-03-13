@@ -2,6 +2,8 @@
 using Game;
 using HarmonyLib;
 using OriDeModLoader;
+using System;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Randomiser
@@ -27,6 +29,13 @@ namespace Randomiser
         {
 
         }
+    }
+
+
+    public class RandomiserAction
+    {
+        public string action;
+        public string parameter;
     }
 
     public class Randomiser
