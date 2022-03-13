@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ginso fixes\RandomiserBootstrap.cs" />
     <Compile Include="RandomiserGuids.cs" />
+    <Compile Include="RandomiserIcons.cs" />
     <Compile Include="RandomiserMod.cs" />
     <Compile Include="Pickups\RandomiserPickupProcessor.cs" />
     <Compile Include="SceneBootstrap.cs" />
@@ -58,6 +59,12 @@
     <PackageReference Include="Lib.Harmony">
       <Version>2.0.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UILib\UILib.csproj">
+      <Project>{4fb90e4d-a170-4261-b1d0-d9a8cee880ae}</Project>
+      <Name>UILib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

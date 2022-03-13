@@ -20,6 +20,7 @@ namespace Randomiser
             Controllers.Add<RandomiserInventory>("b9d5727e-43ff-4a6c-a9d1-d51489b3733d", "Randomiser", mb => Randomiser.Inventory = mb as RandomiserInventory);
 
             SceneBootstrap.RegisterHandler(RandomiserBootstrap.SetupBootstrap, "Randomiser");
+            RandomiserIcons.Initialise();
         }
 
         public void Unload()
