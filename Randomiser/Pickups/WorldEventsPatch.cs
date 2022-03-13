@@ -11,6 +11,8 @@ namespace Randomiser
             {
                 case WorldState.WaterPurified:
                     Randomiser.Grant(RandomiserGuids.WaterPurified);
+                    if (__instance.IsTrue)
+                        Randomiser.Inventory.finishedEscape = true;
                     return false;
                 case WorldState.GinsoTreeKey:
                     Randomiser.Grant(RandomiserGuids.WaterVein);

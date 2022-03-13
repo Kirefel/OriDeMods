@@ -39,16 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeatherSeinPatch.cs" />
+    <Compile Include="Pickups\FeatherSeinPatch.cs" />
+    <Compile Include="Ginso fixes\FinishedGinsoEscapeCondition.cs" />
     <Compile Include="InvisibleCheckpointPatch.cs" />
-    <Compile Include="MapstonePatch.cs" />
-    <Compile Include="PetrifiedPlantPatch.cs" />
+    <Compile Include="Pickups\MapstonePatch.cs" />
+    <Compile Include="Ginso fixes\PatchGetWorldEventCondition.cs" />
+    <Compile Include="Pickups\PetrifiedPlantPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ginso fixes\RandomiserBootstrap.cs" />
     <Compile Include="RandomiserGuids.cs" />
     <Compile Include="RandomiserMod.cs" />
-    <Compile Include="RandomiserPickupProcessor.cs" />
-    <Compile Include="SkillPatch.cs" />
-    <Compile Include="WorldEventsPatch.cs" />
+    <Compile Include="Pickups\RandomiserPickupProcessor.cs" />
+    <Compile Include="SceneBootstrap.cs" />
+    <Compile Include="Pickups\SkillTreePatch.cs" />
+    <Compile Include="Pickups\WorldEventsPatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Lib.Harmony">
