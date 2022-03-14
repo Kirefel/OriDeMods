@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using UnityEngine;
 
 namespace Randomiser
 {
@@ -41,12 +43,22 @@ namespace Randomiser
         public GoalMode GoalMode { get; private set; }
         public KeyMode KeyMode { get; private set; }
         public RandomiserFlags Flags { get; private set; }
-        Dictionary<MoonGuid, RandomiserAction> map;
+
+        private readonly Dictionary<MoonGuid, RandomiserAction> map = new Dictionary<MoonGuid, RandomiserAction>();
 
         // The random seed used to generate the... seed. But nobody means this when they say "seed".
-        string seed;
+        public string seed;
 
         public bool HasFlag(RandomiserFlags flag) => (Flags & flag) != 0;
+
+        public RandomiserAction GetActionFromGuid(MoonGuid guid)
+        {
+            if (map.ContainsKey(guid))
+                return map[guid];
+
+            Randomiser.Message("Unknown pickup id: " + guid.ToString());
+            return null;
+        }
 
         public override void Serialize(Archive ar)
         {
@@ -56,11 +68,46 @@ namespace Randomiser
             ar.Serialize(ref seed);
 
             // TODO serialise map
+            //SerializeMap(ar);
+        }
+
+        private void SerialiseMap(Archive ar)
+        {
+            int count = map.Count;
+            ar.Serialize(ref count);
+
+            if (ar.Reading)
+            {
+                map.Clear();
+                for (int i = 0; i < count; i++)
+                {
+                    MoonGuid guid = new MoonGuid(0, 0, 0, 0);
+                    RandomiserAction action = new RandomiserAction(null, null);
+                    ar.Serialize(ref guid);
+                    action.Serialize(ar);
+                    map[guid] = action;
+                }
+            }
+            else
+            {
+                foreach (var kvp in map)
+                {
+                    MoonGuid guid = ar.Serialize(kvp.Key);
+                    RandomiserAction action = new RandomiserAction(null, null);
+                    action.Serialize(ar);
+                }
+            }
         }
 
         public void LoadSeed(string filepath)
         {
             // TODO handle missing file
+            if (!File.Exists(filepath))
+            {
+                Randomiser.Message("randomizer.dat not found");
+                Debug.Log("File not found: " + Path.GetFullPath(filepath));
+                return;
+            }
 
             Reset();
 
@@ -76,9 +123,11 @@ namespace Randomiser
                     if (line.Length == 0)
                         continue;
 
-                    map[new MoonGuid(new Guid(line[0]))] = new RandomiserAction { action = line[1], parameter = line[2] };
+                    map[new MoonGuid(new Guid(line[0]))] = new RandomiserAction(line[1], line.Skip(2).ToArray());
                 }
             }
+
+            Randomiser.Message($"Seed file loaded:\n{GoalMode} {KeyMode} {seed}");
         }
 
         private void ParseMeta(string[] meta)
@@ -99,14 +148,14 @@ namespace Randomiser
 
         bool TryParse<T>(string value, out T result)
         {
-            object x = Enum.Parse(typeof(T), value);
-            if (x != null)
+            try
             {
-                result = (T)x;
+                result = (T)Enum.Parse(typeof(T), value);
                 return true;
             }
+            catch (ArgumentException) { }
 
-            result = default(T);
+            result = default;
             return false;
         }
 

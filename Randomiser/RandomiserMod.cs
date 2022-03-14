@@ -2,7 +2,6 @@
 using Game;
 using HarmonyLib;
 using OriDeModLoader;
-using System;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -20,6 +19,9 @@ namespace Randomiser
             harmony.PatchAll();
 
             Controllers.Add<RandomiserInventory>("b9d5727e-43ff-4a6c-a9d1-d51489b3733d", "Randomiser", mb => Randomiser.Inventory = mb as RandomiserInventory);
+            Controllers.Add<RandomiserSeed>("df0ebc08-9469-4f58-9e10-f836115b797b", "Randomiser", mb => Randomiser.Seed = mb as RandomiserSeed);
+
+            Hooks.OnStartNewGame += () => Randomiser.Seed.LoadSeed("randomizer.dat");
 
             SceneBootstrap.RegisterHandler(RandomiserBootstrap.SetupBootstrap, "Randomiser");
             RandomiserIcons.Initialise();
@@ -31,13 +33,6 @@ namespace Randomiser
         }
     }
 
-
-    public class RandomiserAction
-    {
-        public string action;
-        public string parameter;
-    }
-
     public class Randomiser
     {
         public static RandomiserInventory Inventory { get; internal set; }
@@ -47,14 +42,15 @@ namespace Randomiser
 
         public static void Grant(MoonGuid guid)
         {
-            Message(guid.ToString());
+            Seed.GetActionFromGuid(guid)?.Execute();
+
             GameWorld.Instance.CurrentArea.DirtyCompletionAmount();
             CheckGoal();
         }
 
         public static bool Has(MoonGuid guid) => false;
 
-        private static void Message(string message)
+        public static void Message(string message)
         {
             if (messageProvider == null)
                 messageProvider = ScriptableObject.CreateInstance<BasicMessageProvider>();
