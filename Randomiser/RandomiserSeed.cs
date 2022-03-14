@@ -146,7 +146,7 @@ namespace Randomiser
             }
         }
 
-        bool TryParse<T>(string value, out T result)
+        public static bool TryParse<T>(string value, out T result)
         {
             try
             {
