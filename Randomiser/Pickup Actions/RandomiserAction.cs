@@ -1,8 +1,5 @@
 ﻿using Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace Randomiser
 {
@@ -16,9 +13,10 @@ namespace Randomiser
             this.action = action;
             this.parameters = parameters;
 
-            if (!handlers.ContainsKey(action))
-                Randomiser.Message("Unknown action: " + action);
+            // TODO detect invalid actions early
         }
+
+        public override string ToString() => $"{action} {string.Join(" ", parameters)}";
 
         public void Serialize(Archive ar)
         {
@@ -26,41 +24,37 @@ namespace Randomiser
             parameters = ar.Serialize(parameters);
         }
 
-        public delegate RandomiserActionResult RandomiserHandlerDelegate();
-        static readonly Dictionary<string, RandomiserHandlerDelegate> handlers;
-        static RandomiserAction()
-        {
-            handlers = new Dictionary<string, RandomiserHandlerDelegate>();
-
-            var methods = typeof(RandomiserAction).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-            foreach (var method in methods)
-            {
-                var attribute = method.GetCustomAttributes(typeof(RandomiserActionHandlerAttribute), false).FirstOrDefault() as RandomiserActionHandlerAttribute;
-                if (attribute == null)
-                    continue;
-
-                handlers[attribute.ActionID] = (RandomiserHandlerDelegate)Delegate.CreateDelegate(typeof(RandomiserAction), method);
-            }
-        }
-
         private static string Wrap(string str, char wrapChar) => $"{wrapChar}{str}{wrapChar}";
 
         public void Execute()
         {
-            if (!handlers.ContainsKey(action))
+            RandomiserActionResult result = Run();
+            if (result == null)
             {
                 Randomiser.Message("Unknown action: " + action);
                 return;
             }
 
-            RandomiserActionResult result = handlers[action]();
-
             string message = result.decoration.HasValue ? Wrap(result.text, result.decoration.Value) : result.text;
             Randomiser.Message(message);
         }
 
-        [RandomiserActionHandler("SK")]
+        private RandomiserActionResult Run()
+        {
+            switch (action)
+            {
+                case "SK": return HandleSkill();
+                case "EC": return HandleEC();
+                case "EX": return HandleSpiritLight();
+                case "HC": return HandleHC();
+                case "AC": return HandleAC();
+                case "KS": return HandleKS();
+                case "MS": return HandleMS();
+                default:
+                    return null;
+            }
+        }
+
         private RandomiserActionResult HandleSkill()
         {
             var skill = (AbilityType)Enum.Parse(typeof(AbilityType), parameters[0]);
@@ -69,7 +63,6 @@ namespace Randomiser
             return new RandomiserActionResult(skill.ToString(), '#');
         }
 
-        [RandomiserActionHandler("EC")]
         private RandomiserActionResult HandleEC()
         {
             var sein = Characters.Sein;
@@ -85,7 +78,6 @@ namespace Randomiser
             return new RandomiserActionResult("Energy Cell");
         }
 
-        [RandomiserActionHandler("EX")]
         private RandomiserActionResult HandleSpiritLight()
         {
             int amount = int.Parse(parameters[0]);
@@ -98,7 +90,6 @@ namespace Randomiser
             return new RandomiserActionResult($"{amount} experience");
         }
 
-        [RandomiserActionHandler("HC")]
         private RandomiserActionResult HandleHC()
         {
             Characters.Sein.Mortality.Health.GainMaxHeartContainer();
@@ -107,7 +98,6 @@ namespace Randomiser
             return new RandomiserActionResult("Health Cell");
         }
 
-        [RandomiserActionHandler("AC")]
         private RandomiserActionResult HandleAC()
         {
             Characters.Sein.Level.GainSkillPoint();
@@ -117,7 +107,6 @@ namespace Randomiser
             return new RandomiserActionResult("Ability Cell");
         }
 
-        [RandomiserActionHandler("KS")]
         private RandomiserActionResult HandleKS()
         {
             Characters.Sein.Inventory.CollectKeystones(1);
@@ -126,7 +115,6 @@ namespace Randomiser
             return new RandomiserActionResult("Keystone");
         }
 
-        [RandomiserActionHandler("MS")]
         private RandomiserActionResult HandleMS()
         {
             Characters.Sein.Inventory.MapStones++;

@@ -50,7 +50,6 @@
     <Compile Include="Pickups\PetrifiedPlantPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pickup Actions\RandomiserAction.cs" />
-    <Compile Include="Pickup Actions\RandomiserActionHandlerAttribute.cs" />
     <Compile Include="Pickup Actions\RandomiserActionResult.cs" />
     <Compile Include="RandomiserBootstrap.cs" />
     <Compile Include="RandomiserGuids.cs" />

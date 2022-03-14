@@ -1,6 +1,6 @@
 ﻿namespace Randomiser
 {
-    public struct RandomiserActionResult
+    public class RandomiserActionResult
     {
         public readonly string text;
         public readonly char? decoration;
