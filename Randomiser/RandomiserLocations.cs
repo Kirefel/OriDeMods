@@ -58,11 +58,14 @@ namespace Randomiser
                 this.guid = guid;
             }
 
-            public bool HasBeenObtained() => false; // Randomiser.Inventory.GetBit(saveIndex)
+            public bool HasBeenObtained() => Randomiser.Inventory.pickupsCollected[saveIndex];
         }
 
         private readonly Dictionary<string, Location> nameMap = new Dictionary<string, Location>();
         private readonly Dictionary<MoonGuid, Location> guidMap = new Dictionary<MoonGuid, Location>();
+
+        public Location GetLocation(MoonGuid guid) => guidMap.GetOrDefault(guid);
+        public Location GetLocation(string name) => nameMap.GetOrDefault(name);
 
         public void Load(string file)
         {

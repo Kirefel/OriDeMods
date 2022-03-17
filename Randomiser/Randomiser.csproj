@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivateDoorBasedOnRandomiserGoal.cs" />
-    <Compile Include="ArchiveExtensions.cs" />
-    <Compile Include="ForbidDoorPatch.cs" />
+    <Compile Include="Goals\ActivateDoorBasedOnRandomiserGoal.cs" />
+    <Compile Include="Extensions\ArchiveExtensions.cs" />
+    <Compile Include="BitCollection.cs" />
+    <Compile Include="Extensions\CollectionsExtensions.cs" />
+    <Compile Include="Goals\ForbidDoorPatch.cs" />
     <Compile Include="Pickups\FeatherSeinPatch.cs" />
     <Compile Include="Ginso fixes\FinishedGinsoEscapeCondition.cs" />
     <Compile Include="InvisibleCheckpointPatch.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="RandomiserBootstrap.cs" />
     <Compile Include="RandomiserGuids.cs" />
     <Compile Include="RandomiserIcons.cs" />
+    <Compile Include="RandomiserLocations.cs" />
     <Compile Include="RandomiserMod.cs" />
     <Compile Include="Pickups\RandomiserPickupProcessor.cs" />
     <Compile Include="RandomiserSeed.cs" />

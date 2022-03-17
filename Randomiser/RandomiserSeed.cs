@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -39,6 +40,26 @@ namespace Randomiser
 
     public class RandomiserSeed : SaveSerialize
     {
+        void FixedUpdate()
+        {
+            if (!GameMapUI.Instance || !GameMapUI.Instance.IsVisible || !DebugMenuB.DebugControlsEnabled)
+                return;
+
+            if (Core.Input.RightClick.OnPressed)
+            {
+                Vector2 cursorPosition = Core.Input.CursorPositionUI;
+                Vector2 worldPosition = AreaMapUI.Instance.Navigation.MapToWorldPosition(cursorPosition);
+                if (Characters.Sein != null)
+                {
+                    Characters.Sein.Position = worldPosition;
+                    Characters.Sein.Position = worldPosition + new Vector2(0f, 0.5f);
+                    UI.Cameras.Current.MoveCameraToTargetInstantly(true);
+                    UI.Menu.HideMenuScreen(true);
+                    return;
+                }
+            }
+        }
+
         // Seed consists of flags, goals and item placements
         public GoalMode GoalMode { get; private set; }
         public KeyMode KeyMode { get; private set; }
@@ -56,7 +77,6 @@ namespace Randomiser
             if (map.ContainsKey(guid))
                 return map[guid];
 
-            Randomiser.Message("Unknown pickup id: " + guid.ToString());
             return null;
         }
 
