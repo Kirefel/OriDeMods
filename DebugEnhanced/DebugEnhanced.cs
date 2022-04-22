@@ -10,12 +10,12 @@ namespace DebugEnhanced
 
         public static bool ReverseDebugControlsDashCondition = true;
 
-        private Harmony harmony;
+        //private Harmony harmony;
 
         public void Init()
         {
-            harmony = new Harmony("com.ori.debugenhanced");
-            harmony.PatchAll();
+            //harmony = new Harmony("com.ori.debugenhanced");
+            //harmony.PatchAll();
 
             Controllers.Add<DebugEnhancedController>();
         }

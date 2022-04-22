@@ -30,7 +30,7 @@ namespace DebugEnhanced
 
         private static void RightClickMapTeleport()
         {
-            if (!GameMapUI.Instance || !GameMapUI.Instance.IsVisible || !DebugMenuB.DebugControlsEnabled)
+            if (!DebugMenuB.DebugControlsEnabled || !AreaMapUI.Instance || !AreaMapUI.Instance.gameObject.activeInHierarchy)
                 return;
 
             if (Core.Input.RightClick.OnPressed)
@@ -66,27 +66,27 @@ namespace DebugEnhanced
         }
     }
 
-    [HarmonyPatch(typeof(SeinLogicCycle), nameof(SeinLogicCycle.AllowDash))]
-    class PatchSeinLogicCycleDashDebugControls
-    {
-        static bool Prefix(out bool __result)
-        {
-            __result = false;
-            if (DebugEnhanced.ReverseDebugControlsDashCondition && DebugMenuB.DebugControlsEnabled)
-                return false;
-            return true;
-        }
-    }
+    //[HarmonyPatch(typeof(SeinLogicCycle), nameof(SeinLogicCycle.AllowDash))]
+    //class PatchSeinLogicCycleDashDebugControls
+    //{
+    //    static bool Prefix(out bool __result)
+    //    {
+    //        __result = false;
+    //        if (DebugEnhanced.ReverseDebugControlsDashCondition && DebugMenuB.DebugControlsEnabled)
+    //            return false;
+    //        return true;
+    //    }
+    //}
 
-    [HarmonyPatch(typeof(SeinLogicCycle), nameof(SeinLogicCycle.AllowGrenade))]
-    class PatchSeinLogicCycleGrenadeDebugControls
-    {
-        static bool Prefix(out bool __result)
-        {
-            __result = false;
-            if (DebugEnhanced.ReverseDebugControlsDashCondition && DebugMenuB.DebugControlsEnabled)
-                return false;
-            return true;
-        }
-    }
+    //[HarmonyPatch(typeof(SeinLogicCycle), nameof(SeinLogicCycle.AllowGrenade))]
+    //class PatchSeinLogicCycleGrenadeDebugControls
+    //{
+    //    static bool Prefix(out bool __result)
+    //    {
+    //        __result = false;
+    //        if (DebugEnhanced.ReverseDebugControlsDashCondition && DebugMenuB.DebugControlsEnabled)
+    //            return false;
+    //        return true;
+    //    }
+    //}
 }
