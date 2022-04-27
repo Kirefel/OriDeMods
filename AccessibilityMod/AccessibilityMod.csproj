@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlwaysRunInBackground.cs" />
     <Compile Include="Bash.cs" />
     <Compile Include="AccessibilityMod.cs" />
     <Compile Include="MaxAreaMapZoomPatch.cs" />
