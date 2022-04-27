@@ -8,7 +8,7 @@ namespace MapTrail
     {
         public string Name => "Map Trail";
 
-        Harmony harmony;
+        private Harmony harmony;
 
         public void Init()
         {

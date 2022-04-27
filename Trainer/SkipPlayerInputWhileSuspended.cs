@@ -3,9 +3,9 @@
 namespace Trainer
 {
     [HarmonyPatch(typeof(PlayerInput), nameof(PlayerInput.FixedUpdate))]
-    class SkipPlayerInputWhileSuspended
+    internal class SkipPlayerInputWhileSuspended
     {
-        static bool Prefix()
+        private static bool Prefix()
         {
             // Returning false causes the original method to be skipped
             return !TrainerFrameStep.ShouldSkipInput;

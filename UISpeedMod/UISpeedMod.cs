@@ -7,7 +7,7 @@ namespace UISpeedMod
     {
         public string Name => "UI Speed Mod";
 
-        Harmony harmony;
+        private Harmony harmony;
 
         public void Init()
         {

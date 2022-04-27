@@ -15,7 +15,7 @@ namespace AccessibilityMod
 
         public string Name => "Accessibility Mod";
 
-        Harmony harmony;
+        private Harmony harmony;
 
         public void Init()
         {

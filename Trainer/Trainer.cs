@@ -8,7 +8,7 @@ namespace Trainer
     {
         public string Name => "Trainer";
 
-        Harmony harmony;
+        private Harmony harmony;
 
         public void Init()
         {

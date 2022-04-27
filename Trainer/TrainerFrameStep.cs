@@ -33,7 +33,7 @@ namespace Trainer
                 coroutine = StartCoroutine(Coroutine());
         }
 
-        IEnumerator Coroutine()
+        private IEnumerator Coroutine()
         {
             while (TrainerActive)
             {
@@ -61,7 +61,7 @@ namespace Trainer
             ShouldSkipInput = false;
         }
 
-        void Start()
+        private void Start()
         {
             TrainerActive = true;
         }
@@ -69,7 +69,7 @@ namespace Trainer
 
         private string lastInput;
 
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(Controls.StepPause))
             {
@@ -100,7 +100,7 @@ namespace Trainer
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (lastInput != null)
             {
@@ -109,7 +109,7 @@ namespace Trainer
             }
         }
 
-        List<string> inputs = new List<string>();
+        private readonly List<string> inputs = new List<string>();
         private void CollectInputsFromFrame()
         {
             inputs.Clear();

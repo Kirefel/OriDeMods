@@ -1,25 +1,24 @@
 ﻿using Game;
-using HarmonyLib;
 using UnityEngine;
 
 namespace DebugEnhanced
 {
     public class DebugEnhancedController : MonoBehaviour
     {
-        void Awake()
+        private void Awake()
         {
             // Enable debug controls on game launch
             DebugMenuB.MakeDebugMenuExist();
             DebugMenuB.DebugControlsEnabled = true;
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             RightClickMapTeleport();
             RightStickDebugNavigation(); // like wotw debug controls
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (DebugMenuB.DebugControlsEnabled)
             {

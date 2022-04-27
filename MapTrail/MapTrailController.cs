@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using UnityEngine;
 using OriDeModLoader.UIExtensions;
+using UnityEngine;
 
 namespace MapTrail
 {
@@ -11,14 +11,11 @@ namespace MapTrail
     {
         public static MapTrailController Instance { get; private set; }
 
-        const int Capacity = 20;
+        private const int Capacity = 20;
         public Queue<Vector2> recentPositions = new Queue<Vector2>(Capacity);
-
-
-        List<CustomWorldMapIcon> icons = new List<CustomWorldMapIcon>();
-
-        const float Interval = 0.1f;
-        float timeRemaining = Interval;
+        private readonly List<CustomWorldMapIcon> icons = new List<CustomWorldMapIcon>();
+        private const float Interval = 0.1f;
+        private float timeRemaining = Interval;
         private Mesh squareMesh;
         private Texture2D circleTex;
 
@@ -84,7 +81,7 @@ namespace MapTrail
             UpdateMapIcons();
         }
 
-        void UpdateMapIcons()
+        private void UpdateMapIcons()
         {
             int i = 0;
             foreach (var pos in recentPositions)
@@ -94,7 +91,7 @@ namespace MapTrail
                 icons[i].Position = new Vector3(-1000, -1000, 0);
         }
 
-        void PreloadResources()
+        private void PreloadResources()
         {
             var width = 1f;
             var height = 1f;
@@ -140,7 +137,7 @@ namespace MapTrail
             circleTex = LoadTextureFromFile("Mods/assets/MapTrail/circle.png", 64, 64);
         }
 
-        GameObject IconFunc()
+        private GameObject IconFunc()
         {
             OriDeModLoader.Loader.Log("Creating new icon");
 
@@ -171,7 +168,7 @@ namespace MapTrail
             }
         }
 
-        Texture2D LoadTextureFromFile(string path, int width, int height)
+        private Texture2D LoadTextureFromFile(string path, int width, int height)
         {
             //if (!File.Exists(path))
             //    throw new FileNotFoundException("Failed to load texture (file not found)", path);
