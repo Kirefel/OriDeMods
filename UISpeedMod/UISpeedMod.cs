@@ -11,6 +11,8 @@ namespace UISpeedMod
 
         public void Init()
         {
+            // TODO skip map popups
+            // TODO skip cutscenes?
             harmony = new Harmony("com.ori.uispeed");
             harmony.PatchAll();
         }

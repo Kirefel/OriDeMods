@@ -8,6 +8,8 @@ namespace AccessibilityMod
 {
     public class AccessibilityMod : IMod
     {
+        // TODO this is the mod where free gjump, invert climb, screen shake reduction etc. would go
+
         public static BoolSetting cursorLock = new BoolSetting("Cursor Lock", true);
         public static FloatSetting newfloat = new FloatSetting("It's a float!", 0);
 
@@ -25,8 +27,6 @@ namespace AccessibilityMod
             // Settings.CursorLock.OnChanged += value => Cursor.lockState = value ? CursorLockMode.Confined : CursorLockMode.None;
 
             CustomMenuManager.RegisterOptionsScreen<OptionsScreen>("Accessibility", 100);
-            //CustomSeinAbilityManager.Add<MyAbility>("3962d401-67ee-48c0-86fa-7ab430ea2ddd");
-
         }
 
         public void Unload()
@@ -44,20 +44,4 @@ namespace AccessibilityMod
             AddSlider(AccessibilityMod.newfloat, -1f, 1f, 0.2f, "[-1, 1] step 0.2");
         }
     }
-
-    //public class MyAbility : CustomSeinAbility
-    //{
-    //    public override bool AllowAbility(SeinLogicCycle logicCycle)
-    //    {
-    //        return !logicCycle.Sein.Abilities.Swimming.IsSwimming;
-    //    }
-
-    //    public override void UpdateCharacterState()
-    //    {
-    //        if (Input.GetKey(KeyCode.K))
-    //        {
-    //            Debug.Log("You are holding K");
-    //        }
-    //    }
-    //}
 }
