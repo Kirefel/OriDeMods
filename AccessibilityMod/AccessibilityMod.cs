@@ -22,6 +22,7 @@ namespace AccessibilityMod
             harmony = new Harmony("com.ori.accessibility");
             harmony.PatchAll();
             BashDeadzone.Patch(harmony);
+            MoreSaveSlots.Patch(harmony);
 
             Cursor.lockState = cursorLock ? CursorLockMode.Confined : CursorLockMode.None;
             // Settings.CursorLock.OnChanged += value => Cursor.lockState = value ? CursorLockMode.Confined : CursorLockMode.None;
