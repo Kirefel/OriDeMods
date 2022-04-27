@@ -16,7 +16,7 @@ Adds a recent history of Ori's position to the map.
 
 ## Trainer
 
-Fo far, just frame step.
+So far, just frame step.
 
 ## UI Speed Mod
 
