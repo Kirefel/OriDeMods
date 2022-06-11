@@ -2,10 +2,6 @@
 
 A collection of several mods that I haven't gotten around to putting in other repos.
 
-## Accessibility Mod
-
-Adds a few accessibility and QOL features such as pause menu improvements and map zoom level.
-
 ## Debug Enhanced
 
 Adds more debug options and enables debug controls automatically.
